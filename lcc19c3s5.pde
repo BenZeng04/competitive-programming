@@ -30,7 +30,7 @@ int sum(int ind, int row, int a)
 }
 int updateAndQuery(int col, int row, int a)
 {
-    int l = sum(col - 1, row, a, r = sum(col + 1, row, a), upd = l + r + 1, neg = -upd;
+    int l = sum(col - 1, row, a), r = sum(col + 1, row, a), upd = l + r + 1, neg = -upd;
     if(l > 0) upd -= r + 1;
     if(r > 0) neg += l + 1;
     // Update current tile
