@@ -10,7 +10,8 @@ void update(int ind, int val, int row, int a)
     if(ind < 1 || ind >= MC) return;
     for(; ind < MC; ind += (ind & (-ind)))
     {
-        if(BIT[row][a].containsKey(ind)) BIT[row][a].put(ind, BIT[row][a].get(ind) + val);
+        Integer e = BIT[row][a].get(ind);
+        if(e != null) BIT[row][a].put(ind, e + val);
         else BIT[row][a].put(ind, val);
     }
 }
@@ -21,26 +22,23 @@ int sum(int ind, int row, int a)
     int result = 0;
     for(; ind > 0; ind -= (ind & (-ind)))
     {
-        if(BIT[row][a].containsKey(ind)) 
-            result += BIT[row][a].get(ind);
+        Integer e = BIT[row][a].get(ind);
+        if(e != null) 
+            result += e;
     }
     return result;
 }
 int updateAndQuery(int col, int row, int a)
 {
-    int l = sum(col - 1, row, a);
-    int r = sum(col + 1, row, a);
-    int upd = l + r + 1, neg = -upd;
+    int l = sum(col - 1, row, a, r = sum(col + 1, row, a), upd = l + r + 1, neg = -upd;
     if(l > 0) upd -= r + 1;
     if(r > 0) neg += l + 1;
     // Update current tile
     update(col, upd, row, a);
     update(col + 1, neg, row, a);
     // Update l and r blocks
-    if(l > 0)
-        update(col - l, r + 1, row, a);
-    if(r > 0)
-        update(col + r + 1, -(l + 1), row, a);
+    if(l > 0) update(col - l, r + 1, row, a);
+    if(r > 0) update(col + r + 1, -(l + 1), row, a);
     return l + r + 1;
 }
 void setup()
